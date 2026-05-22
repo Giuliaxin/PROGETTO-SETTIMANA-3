@@ -76,48 +76,64 @@ function render() {
     else if (ordine === "alpha-za") visualizzati.sort((a, b) => b.combinazione.localeCompare(a.combinazione));
   }
 
+  // Raggruppamento per Categorie
+  const raggruppati = visualizzati.reduce((acc, item) => {
+    if (!acc[item.categoria]) acc[item.categoria] = [];
+    acc[item.categoria].push(item);
+    return acc;
+  }, {});
+
   container.className = `container-elementi vista-${vista}`;
   container.innerHTML = "";
 
   if (vista === "tabella") {
-    const header = document.createElement("li");
+    const header = document.createElement("div");
     header.className = "header-tabella";
     header.innerHTML = `<span>Combinazione</span><span>Categoria</span>`;
     container.appendChild(header);
   }
 
   if (visualizzati.length === 0) {
-    container.innerHTML = '<li class="lab-item" style="text-align: center; padding: 20px;">Nessun risultato trovato</li>';
+    container.innerHTML = '<div class="lab-item" style="text-align: center; padding: 20px;">Nessun risultato trovato</div>';
   } else {
-    visualizzati.forEach(item => {
-      const li = document.createElement("li");
-      li.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
-      
-      let html = `
-        <span class="testo-alimento">${item.combinazione}</span>
-        <span class="dettaglio-alimento">${vista === "tabella" ? item.categoria : item.categoria + " — Score: " + item.score}</span>
-      `;
-
+    for (const cat in raggruppati) {
       if (vista !== "tabella") {
-        html += `
-          <div class="gruppo-pulsanti">
-            <div class="riga-movimento">
-              <button class="btn-freccia" data-id="${item.id}" data-action="up">↑</button>
-              <button class="btn-freccia" data-id="${item.id}" data-action="down">↓</button>
-            </div>
-            <div class="riga-azioni">
-              <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
-                ${item.validato ? "Validato" : "Da validare"}
-              </button>
-              <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
-              <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
-            </div>
-          </div>
-        `;
+        const headerCat = document.createElement("div");
+        headerCat.className = "header-categoria";
+        headerCat.innerHTML = `<strong>${cat}</strong>`;
+        container.appendChild(headerCat);
       }
-      li.innerHTML = html;
-      container.appendChild(li);
-    });
+
+      raggruppati[cat].forEach(item => {
+        const div = document.createElement("div");
+        div.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
+        
+        let html = `
+          <span class="testo-alimento">${item.combinazione}</span>
+          <span class="dettaglio-alimento">${vista === "tabella" ? item.categoria : item.categoria + " — Score: " + item.score}</span>
+        `;
+
+        if (vista !== "tabella") {
+          html += `
+            <div class="gruppo-pulsanti">
+              <div class="riga-movimento">
+                <button class="btn-freccia" data-id="${item.id}" data-action="up">↑</button>
+                <button class="btn-freccia" data-id="${item.id}" data-action="down">↓</button>
+              </div>
+              <div class="riga-azioni">
+                <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
+                  ${item.validato ? "Validato" : "Da validare"}
+                </button>
+                <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
+                <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
+              </div>
+            </div>
+          `;
+        }
+        div.innerHTML = html;
+        container.appendChild(div);
+      });
+    }
   }
 
   const tot = laboratori.length;
@@ -179,7 +195,7 @@ document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
     item.validato = !item.validato;
     render();
   } else if (action === "modifica") {
-    avviaModifica(item, btn.closest("li"));
+    avviaModifica(item, btn.closest(".lab-item"));
   } else if (action === "up" || action === "down") {
     gestisciRiordino(id, action);
   }
@@ -288,8 +304,8 @@ document.addEventListener('keydown', (e) => {
    header per categoria con sotto la lista di quella categoria.
 */
 /* SCRIVI QUI LA TUA RISPOSTA */
-function avviaModifica(item, li) {
-  const span = li.querySelector(".testo-alimento");
+function avviaModifica(item, container) {
+  const span = container.querySelector(".testo-alimento");
   const input = document.createElement("input");
   input.className = "input-modifica";
   input.value = item.combinazione;

@@ -259,6 +259,22 @@ h2 {
   color: #666;
 }
 
+.header-categoria {
+  background-color: #e5dfd3;
+  color: #666;
+  padding: 8px 15px;
+  margin: 20px 0 10px 0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.container-elementi.vista-griglia .header-categoria {
+  display: none;
+}
+
 .container-elementi.vista-griglia {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -445,6 +461,11 @@ body.dark-mode .lab-item {
   background-color: #3a3a3a;
   border-color: #555;
   color: #f1f1f1;
+}
+
+body.dark-mode .header-categoria {
+  background-color: #4a4a4a;
+  color: #ccc;
 }
 
 body.dark-mode .container-elementi.vista-tabella .header-tabella {
