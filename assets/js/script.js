@@ -19,8 +19,7 @@ REGOLE
    - una variabile per la stringa di ricerca corrente
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
-let ricette = [
+let laboratori = [
   { id: 1, combinazione: "Riso + Lenticchie", categoria: "Proteine", score: 95, validato: true },
   { id: 2, combinazione: "Cavolo nero + Tahina", categoria: "Calcio", score: 75, validato: false },
   { id: 3, combinazione: "Quinoa + Fagioli Neri", categoria: "Proteine", score: 90, validato: true },
@@ -55,14 +54,13 @@ let isDarkMode = false;
    Salva lo stato in localStorage in fondo a render() (cerca tu come funziona).
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
 function render() {
   const container = document.getElementById("lista-laboratorio");
   const ricerca = document.getElementById("input-ricerca").value.toLowerCase();
   const filtroStato = document.getElementById("filtro-stato").value;
   const ordine = document.getElementById("ordine-selezionato").value;
 
-  let visualizzati = ricette.filter(item => {
+  let visualizzati = laboratori.filter(item => {
     const matchRicerca = item.combinazione.toLowerCase().includes(ricerca) || item.categoria.toLowerCase().includes(ricerca);
     const matchStato = filtroStato === "tutti" ? true : (filtroStato === "validato" ? item.validato : !item.validato);
     return matchRicerca && matchStato;
@@ -75,25 +73,29 @@ function render() {
 
   container.innerHTML = "";
 
-  visualizzati.forEach(item => {
-    const li = document.createElement("li");
-    li.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
-    li.innerHTML = `
-      <span class="testo-alimento">${item.combinazione}</span>
-      <span class="dettaglio-alimento">${item.categoria} — Score: ${item.score}</span>
-      <div class="gruppo-pulsanti">
-        <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
-          ${item.validato ? "Validato" : "Da validare"}
-        </button>
-        <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
-        <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
-      </div>
-    `;
-    container.appendChild(li);
-  });
+  if (visualizzati.length === 0) {
+    container.innerHTML = '<li class="lab-item" style="text-align: center; padding: 20px;">Nessun risultato trovato</li>';
+  } else {
+    visualizzati.forEach(item => {
+      const li = document.createElement("li");
+      li.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
+      li.innerHTML = `
+        <span class="testo-alimento">${item.combinazione}</span>
+        <span class="dettaglio-alimento">${item.categoria} — Score: ${item.score}</span>
+        <div class="gruppo-pulsanti">
+          <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
+            ${item.validato ? "Validato" : "Da validare"}
+          </button>
+          <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
+          <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
+        </div>
+      `;
+      container.appendChild(li);
+    });
+  }
 
-  const tot = ricette.length;
-  const validati = ricette.filter(i => i.validato).length;
+  const tot = laboratori.length;
+  const validati = laboratori.filter(i => i.validato).length;
   document.getElementById("stat-totale").textContent = tot;
   document.getElementById("stat-visitati").textContent = validati;
   document.getElementById("stat-da-visitare").textContent = tot - validati;
@@ -109,7 +111,6 @@ function render() {
    Id univoco con Date.now().
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("form-combinazione").addEventListener("submit", (e) => {
   e.preventDefault();
   const comb = document.getElementById("input-combinazione").value.trim();
@@ -122,7 +123,7 @@ document.getElementById("form-combinazione").addEventListener("submit", (e) => {
     return;
   }
 
-  ricette.push({ id: Date.now(), combinazione: comb, categoria: cat, score, validato: stato });
+  laboratori.push({ id: Date.now(), combinazione: comb, categoria: cat, score, validato: stato });
   e.target.reset();
   render();
   mostraNotifica("Combinazione aggiunta");
@@ -135,16 +136,15 @@ document.getElementById("form-combinazione").addEventListener("submit", (e) => {
    - Conteggi dinamici dentro render().
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
   const btn = e.target.closest("button");
   if (!btn) return;
   const id = parseInt(btn.dataset.id);
   const action = btn.dataset.action;
-  const item = ricette.find(i => i.id === id);
+  const item = laboratori.find(i => i.id === id);
 
   if (action === "elimina") {
-    ricette = ricette.filter(i => i.id !== id);
+    laboratori = laboratori.filter(i => i.id !== id);
     render();
     mostraNotifica("Elemento eliminato");
   } else if (action === "toggle") {
@@ -162,7 +162,6 @@ document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
    I tre si compongono dentro render() in fila.
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("input-ricerca").oninput = render;
 document.getElementById("filtro-stato").onchange = render;
 document.getElementById("ordine-selezionato").onchange = render;
@@ -172,7 +171,6 @@ document.getElementById("ordine-selezionato").onchange = render;
    lo mostra (display: block), poi dopo 3000ms (setTimeout) lo nasconde.
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
 function mostraNotifica(testo) {
   const notifica = document.getElementById("notifica");
   notifica.textContent = testo;
@@ -185,7 +183,6 @@ function mostraNotifica(testo) {
    In CSS scrivi le regole opposte (es. body.dark { background: #111; ... }).
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("btn-tema").onclick = () => {
   isDarkMode = !isDarkMode;
   document.body.classList.toggle("dark-mode", isDarkMode);
@@ -199,37 +196,27 @@ document.getElementById("btn-tema").onclick = () => {
        if (salvato) stato = JSON.parse(salvato);
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
-
 /* RIORDINO ↑ ↓
    Due button su ogni elemento. Click su ↑ scambia con il precedente nell'array,
    ↓ con il successivo. Event delegation. Poi render().
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
-
 /* ESPORTAZIONE / IMPORTAZIONE JSON (cerca tu su MDN)
    - Esporta: crea un Blob con JSON.stringify(stato), genera un URL con
      URL.createObjectURL e simula il click su un <a download>.
    - Importa: <input type="file"> + FileReader per leggere il contenuto come
-     teosto, JSON.parse, sostituisci lo stato, render().
+     text, JSON.parse, sostituisci lo stato, render().
 */
-
-/* SCRIVI QUI LA TUA RISPOSTA */
 
 /* STATISTICHE GRAFICHE
    Almeno due indicatori: contatori grandi e/o barre orizzontali
    (<div> con width: X% in base al dato). Aggiorna dentro render().
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
-
 /* MULTI-VISTA — lista / card / tabella
    Una variabile globale "vista" che render() legge per decidere quale HTML
    produrre. Tre button cambiano "vista" e chiamano render().
 */
-
-/* SCRIVI QUI LA TUA RISPOSTA */
 
 /* CATEGORIE
    Aggiungi un campo categoria nello schema. Nel form un <select> per sceglierla.
@@ -237,7 +224,6 @@ document.getElementById("btn-tema").onclick = () => {
    header per categoria con sotto la lista di quella categoria.
 */
 
-/* SCRIVI QUI LA TUA RISPOSTA */
 function avviaModifica(item, li) {
   const span = li.querySelector(".testo-alimento");
   const input = document.createElement("input");
@@ -258,4 +244,6 @@ function avviaModifica(item, li) {
   input.focus();
 }
 
-render();
+document.addEventListener("DOMContentLoaded", () => {
+    render();
+});
