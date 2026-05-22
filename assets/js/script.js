@@ -18,7 +18,8 @@ REGOLE
    - una variabile per l'ordinamento corrente
    - una variabile per la stringa di ricerca corrente
 */
-let laboratori = [
+/* SCRIVI QUI LA TUA RISPOSTA */
+let laboratori = JSON.parse(localStorage.getItem("dati")) || [
   { id: 1, combinazione: "Riso + Lenticchie", categoria: "Proteine", score: 95, validato: true },
   { id: 2, combinazione: "Cavolo nero + Tahina", categoria: "Calcio", score: 75, validato: false },
   { id: 3, combinazione: "Quinoa + Fagioli Neri", categoria: "Proteine", score: 90, validato: true },
@@ -41,6 +42,8 @@ let laboratori = [
   { id: 20, combinazione: "Lenticchie + Carote", categoria: "Ferro", score: 83, validato: false }
 ];
 let isDarkMode = false;
+let vista = "lista";
+let filtroCategoria = "tutti";
 
 /* RENDER()
    Una sola funzione che ridipinge la lista. A ogni chiamata:
@@ -52,6 +55,7 @@ let isDarkMode = false;
    Aggiorna anche conteggi e statistiche.
    Salva lo stato in localStorage in fondo a render() (cerca tu come funziona).
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 function render() {
   const container = document.getElementById("lista-laboratorio");
   const ricerca = document.getElementById("input-ricerca").value.toLowerCase();
@@ -61,49 +65,59 @@ function render() {
   let visualizzati = laboratori.filter(item => {
     const matchRicerca = item.combinazione.toLowerCase().includes(ricerca) || item.categoria.toLowerCase().includes(ricerca);
     const matchStato = filtroStato === "tutti" ? true : (filtroStato === "validato" ? item.validato : !item.validato);
-    return matchRicerca && matchStato;
+    const matchCat = filtroCategoria === "tutti" ? true : item.categoria === filtroCategoria;
+    return matchRicerca && matchStato && matchCat;
   });
 
-  if (ordine === "score-crescente") visualizzati.sort((a, b) => a.score - b.score);
-  else if (ordine === "score-decrescente") visualizzati.sort((a, b) => b.score - a.score);
-  else if (ordine === "alpha-az") visualizzati.sort((a, b) => a.combinazione.localeCompare(b.combinazione));
-  else if (ordine === "alpha-za") visualizzati.sort((a, b) => b.combinazione.localeCompare(a.combinazione));
+  if (ordine !== "manuale") {
+    if (ordine === "score-crescente") visualizzati.sort((a, b) => a.score - b.score);
+    else if (ordine === "score-decrescente") visualizzati.sort((a, b) => b.score - a.score);
+    else if (ordine === "alpha-az") visualizzati.sort((a, b) => a.combinazione.localeCompare(b.combinazione));
+    else if (ordine === "alpha-za") visualizzati.sort((a, b) => b.combinazione.localeCompare(a.combinazione));
+  }
 
-  const raggruppati = visualizzati.reduce((acc, item) => {
-    if (!acc[item.categoria]) acc[item.categoria] = [];
-    acc[item.categoria].push(item);
-    return acc;
-  }, {});
-
+  container.className = `container-elementi vista-${vista}`;
   container.innerHTML = "";
+
+  if (vista === "tabella") {
+    const header = document.createElement("li");
+    header.className = "header-tabella";
+    header.innerHTML = `<span>Combinazione</span><span>Categoria</span>`;
+    container.appendChild(header);
+  }
 
   if (visualizzati.length === 0) {
     container.innerHTML = '<li class="lab-item" style="text-align: center; padding: 20px;">Nessun risultato trovato</li>';
   } else {
-    for (const categoria in raggruppati) {
-      const liHeader = document.createElement("li");
-      liHeader.className = "categoria-header";
-      liHeader.style.listStyle = "none";
-      liHeader.innerHTML = `<strong>${categoria}</strong>`;
-      container.appendChild(liHeader);
+    visualizzati.forEach(item => {
+      const li = document.createElement("li");
+      li.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
+      
+      let html = `
+        <span class="testo-alimento">${item.combinazione}</span>
+        <span class="dettaglio-alimento">${vista === "tabella" ? item.categoria : item.categoria + " — Score: " + item.score}</span>
+      `;
 
-      raggruppati[categoria].forEach(item => {
-        const li = document.createElement("li");
-        li.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
-        li.innerHTML = `
-          <span class="testo-alimento">${item.combinazione}</span>
-          <span class="dettaglio-alimento">${item.categoria} — Score: ${item.score}</span>
+      if (vista !== "tabella") {
+        html += `
           <div class="gruppo-pulsanti">
-            <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
-              ${item.validato ? "Validato" : "Da validare"}
-            </button>
-            <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
-            <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
+            <div class="riga-movimento">
+              <button class="btn-freccia" data-id="${item.id}" data-action="up">↑</button>
+              <button class="btn-freccia" data-id="${item.id}" data-action="down">↓</button>
+            </div>
+            <div class="riga-azioni">
+              <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
+                ${item.validato ? "Validato" : "Da validare"}
+              </button>
+              <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
+              <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
+            </div>
           </div>
         `;
-        container.appendChild(li);
-      });
-    }
+      }
+      li.innerHTML = html;
+      container.appendChild(li);
+    });
   }
 
   const tot = laboratori.length;
@@ -112,6 +126,8 @@ function render() {
   document.getElementById("stat-visitati").textContent = validati;
   document.getElementById("stat-da-visitare").textContent = tot - validati;
   document.getElementById("barra-riempimento").style.width = tot > 0 ? (validati / tot) * 100 + "%" : "0%";
+  
+  localStorage.setItem("dati", JSON.stringify(laboratori));
 }
 
 /* FORM CON VALIDAZIONE
@@ -122,6 +138,7 @@ function render() {
    Altrimenti push allo stato, form.reset(), render().
    Id univoco con Date.now().
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("form-combinazione").addEventListener("submit", (e) => {
   e.preventDefault();
   const comb = document.getElementById("input-combinazione").value.trim();
@@ -146,6 +163,7 @@ document.getElementById("form-combinazione").addEventListener("submit", (e) => {
      si conferma con Invio o blur.
    - Conteggi dinamici dentro render().
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
   const btn = e.target.closest("button");
   if (!btn) return;
@@ -162,6 +180,8 @@ document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
     render();
   } else if (action === "modifica") {
     avviaModifica(item, btn.closest("li"));
+  } else if (action === "up" || action === "down") {
+    gestisciRiordino(id, action);
   }
 });
 
@@ -171,14 +191,22 @@ document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
    - Ordinamento: due button (o select). Salva in stato e render().
    I tre si compongono dentro render() in fila.
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("input-ricerca").oninput = render;
 document.getElementById("filtro-stato").onchange = render;
 document.getElementById("ordine-selezionato").onchange = render;
+if(document.getElementById("filtro-categoria")) {
+    document.getElementById("filtro-categoria").onchange = (e) => {
+        filtroCategoria = e.target.value;
+        render();
+    };
+}
 
 /* NOTIFICHE TEMPORANEE
    Funzione notifica(testo) che imposta il testo del <div id="notifica">,
    lo mostra (display: block), poi dopo 3000ms (setTimeout) lo nasconde.
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 function mostraNotifica(testo) {
   const notifica = document.getElementById("notifica");
   notifica.textContent = testo;
@@ -190,6 +218,7 @@ function mostraNotifica(testo) {
    Un button che chiama document.body.classList.toggle("dark").
    In CSS scrivi le regole opposte (es. body.dark { background: #111; ... }).
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 document.getElementById("btn-tema").onclick = () => {
   isDarkMode = !isDarkMode;
   document.body.classList.toggle("dark-mode", isDarkMode);
@@ -210,6 +239,16 @@ document.getElementById("btn-tema").onclick = () => {
    ↓ con il successivo. Event delegation. Poi render().
 */
 /* SCRIVI QUI LA TUA RISPOSTA */
+function gestisciRiordino(id, action) {
+    const idx = laboratori.findIndex(i => i.id === id);
+    if (action === "up" && idx > 0) {
+        [laboratori[idx], laboratori[idx-1]] = [laboratori[idx-1], laboratori[idx]];
+    } else if (action === "down" && idx < laboratori.length - 1) {
+        [laboratori[idx], laboratori[idx+1]] = [laboratori[idx+1], laboratori[idx]];
+    }
+    document.getElementById("ordine-selezionato").value = "manuale";
+    render();
+}
 
 /* ESPORTAZIONE / IMPORTAZIONE JSON (cerca tu su MDN)
    - Esporta: crea un Blob con JSON.stringify(stato), genera un URL con
@@ -230,6 +269,18 @@ document.getElementById("btn-tema").onclick = () => {
    produrre. Tre button cambiano "vista" e chiamano render().
 */
 /* SCRIVI QUI LA TUA RISPOSTA */
+if(document.getElementById("btn-vista-lista")) document.getElementById("btn-vista-lista").onclick = () => { vista = "lista"; render(); };
+if(document.getElementById("btn-vista-griglia")) document.getElementById("btn-vista-griglia").onclick = () => { vista = "griglia"; render(); };
+if(document.getElementById("btn-vista-tabella")) document.getElementById("btn-vista-tabella").onclick = () => { vista = "tabella"; render(); };
+
+document.addEventListener('keydown', (e) => {
+    if(e.key === 'v') {
+        if(vista === 'lista') vista = 'griglia';
+        else if(vista === 'griglia') vista = 'tabella';
+        else vista = 'lista';
+        render();
+    }
+});
 
 /* CATEGORIE
    Aggiungi un campo categoria nello schema. Nel form un <select> per sceglierla.
@@ -237,27 +288,16 @@ document.getElementById("btn-tema").onclick = () => {
    header per categoria con sotto la lista di quella categoria.
 */
 /* SCRIVI QUI LA TUA RISPOSTA */
-
 function avviaModifica(item, li) {
   const span = li.querySelector(".testo-alimento");
   const input = document.createElement("input");
   input.className = "input-modifica";
   input.value = item.combinazione;
-  input.style.width = "100%";
- 
-  const salva = () => {
-    item.combinazione = input.value;
-    render();
-    mostraNotifica("Elemento aggiornato");
-  };
-
+  const salva = () => { item.combinazione = input.value; render(); mostraNotifica("Elemento aggiornato"); };
   input.onblur = salva;
   input.onkeydown = (e) => { if (e.key === "Enter") salva(); };
- 
   span.replaceWith(input);
   input.focus();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  render();
-});
+document.addEventListener("DOMContentLoaded", () => { render(); });

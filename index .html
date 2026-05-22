@@ -25,7 +25,7 @@
         <div class="campi-input">
           <div class="campo-form">
             <label>Combinazione</label>
-            <input id="input-combinazione" type="text" placeholder="Es. Riso + Lenticchie..." />
+            <input id="input-combinazione" type="text" placeholder="Es. Riso + Lenticchie..." required />
           </div>
           <div class="campo-form">
             <label>Categoria</label>
@@ -37,7 +37,7 @@
           </div>
           <div class="campo-form">
             <label>Score (0-100)</label>
-            <input id="input-score" type="number" placeholder="85" />
+            <input id="input-score" type="number" placeholder="85" required />
           </div>
           <div class="campo-form">
             <label>Stato</label>
@@ -47,7 +47,6 @@
             </select>
           </div>
         </div>
-        
         <button type="submit" class="btn-aggiungi-centrato">Aggiungi in lab</button>
       </form>
     </section>
@@ -56,12 +55,10 @@
 
     <section class="sezione-controlli">
       <div class="controllo-item cerca-lungo">
-        <label>Cerca</label>
-        <input id="input-ricerca" type="text" placeholder="Cerca per combinazione o categoria..." />
+        <input id="input-ricerca" type="text" placeholder="Cerca..." />
       </div>
 
       <div class="controllo-item filtro-medio">
-        <label>Filtri</label>
         <select id="filtro-stato">
           <option value="tutti">Tutti</option>
           <option value="validato">Validati</option>
@@ -69,37 +66,49 @@
         </select>
       </div>
 
+      <div class="controllo-item filtro-medio">
+        <select id="filtro-categoria">
+          <option value="tutti">Tutte Categorie</option>
+          <option value="Ferro">Ferro</option>
+          <option value="Calcio">Calcio</option>
+          <option value="Proteine">Proteine</option>
+        </select>
+      </div>
+
       <div class="controllo-item ordine-medio">
-        <label>Ordine</label>
         <select id="ordine-selezionato">
+          <option value="manuale">Nessun ordine</option>
           <option value="score-crescente">Score crescente</option>
           <option value="score-decrescente">Score decrescente</option>
           <option value="alpha-az">Alfabetico (A-Z)</option>
           <option value="alpha-za">Alfabetico (Z-A)</option>
         </select>
       </div>
+
+      <div class="controllo-item" style="display: flex; gap: 4px; align-items: center;">
+        <button id="btn-vista-lista" style="padding: 4px 8px; font-size: 14px;">≡</button>
+        <button id="btn-vista-griglia" style="padding: 4px 8px; font-size: 14px;">⊞</button>
+        <button id="btn-vista-tabella" style="padding: 4px 8px; font-size: 14px;">▤</button>
+      </div>
     </section>
 
     <section class="sezione-statistiche">
       <div class="box-statistiche">
         <h3>Statistiche</h3>
-        
         <div class="numeri-stat">
           <div class="stat-blocco text-verde"><strong id="stat-totale">20</strong>Totale</div>
           <div class="stat-blocco text-azzurro"><strong id="stat-visitati">10</strong>Validati</div>
           <div class="stat-blocco text-rosso"><strong id="stat-da-visitare">10</strong>Da validare</div>
         </div>
-
         <div class="barra-grigia">
-          <div id="barra-riempimento" style="width: 50%; background-color: #9ac5e8;"></div>
+          <div id="barra-riempimento"></div>
         </div>
         <p>Stato Validazione</p>
       </div>
     </section>
 
     <section class="sezione-lista">
-      <ul id="lista-laboratorio">
-        </ul>
+      <ul id="lista-laboratorio" class="container-elementi"></ul>
     </section>
 
   </div>
