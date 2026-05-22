@@ -18,7 +18,6 @@ REGOLE
    - una variabile per l'ordinamento corrente
    - una variabile per la stringa di ricerca corrente
 */
-
 let laboratori = [
   { id: 1, combinazione: "Riso + Lenticchie", categoria: "Proteine", score: 95, validato: true },
   { id: 2, combinazione: "Cavolo nero + Tahina", categoria: "Calcio", score: 75, validato: false },
@@ -53,7 +52,6 @@ let isDarkMode = false;
    Aggiorna anche conteggi e statistiche.
    Salva lo stato in localStorage in fondo a render() (cerca tu come funziona).
 */
-
 function render() {
   const container = document.getElementById("lista-laboratorio");
   const ricerca = document.getElementById("input-ricerca").value.toLowerCase();
@@ -71,27 +69,41 @@ function render() {
   else if (ordine === "alpha-az") visualizzati.sort((a, b) => a.combinazione.localeCompare(b.combinazione));
   else if (ordine === "alpha-za") visualizzati.sort((a, b) => b.combinazione.localeCompare(a.combinazione));
 
+  const raggruppati = visualizzati.reduce((acc, item) => {
+    if (!acc[item.categoria]) acc[item.categoria] = [];
+    acc[item.categoria].push(item);
+    return acc;
+  }, {});
+
   container.innerHTML = "";
 
   if (visualizzati.length === 0) {
     container.innerHTML = '<li class="lab-item" style="text-align: center; padding: 20px;">Nessun risultato trovato</li>';
   } else {
-    visualizzati.forEach(item => {
-      const li = document.createElement("li");
-      li.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
-      li.innerHTML = `
-        <span class="testo-alimento">${item.combinazione}</span>
-        <span class="dettaglio-alimento">${item.categoria} — Score: ${item.score}</span>
-        <div class="gruppo-pulsanti">
-          <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
-            ${item.validato ? "Validato" : "Da validare"}
-          </button>
-          <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
-          <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
-        </div>
-      `;
-      container.appendChild(li);
-    });
+    for (const categoria in raggruppati) {
+      const liHeader = document.createElement("li");
+      liHeader.className = "categoria-header";
+      liHeader.style.listStyle = "none";
+      liHeader.innerHTML = `<strong>${categoria}</strong>`;
+      container.appendChild(liHeader);
+
+      raggruppati[categoria].forEach(item => {
+        const li = document.createElement("li");
+        li.className = `lab-item ${item.validato ? "validato" : "da-validare"}`;
+        li.innerHTML = `
+          <span class="testo-alimento">${item.combinazione}</span>
+          <span class="dettaglio-alimento">${item.categoria} — Score: ${item.score}</span>
+          <div class="gruppo-pulsanti">
+            <button class="${item.validato ? "btn-stato-visitato" : "btn-stato-da-validare"}" data-id="${item.id}" data-action="toggle">
+              ${item.validato ? "Validato" : "Da validare"}
+            </button>
+            <button class="btn-modifica" data-id="${item.id}" data-action="modifica">Modifica</button>
+            <button class="btn-elimina" data-id="${item.id}" data-action="elimina">Elimina</button>
+          </div>
+        `;
+        container.appendChild(li);
+      });
+    }
   }
 
   const tot = laboratori.length;
@@ -110,7 +122,6 @@ function render() {
    Altrimenti push allo stato, form.reset(), render().
    Id univoco con Date.now().
 */
-
 document.getElementById("form-combinazione").addEventListener("submit", (e) => {
   e.preventDefault();
   const comb = document.getElementById("input-combinazione").value.trim();
@@ -135,7 +146,6 @@ document.getElementById("form-combinazione").addEventListener("submit", (e) => {
      si conferma con Invio o blur.
    - Conteggi dinamici dentro render().
 */
-
 document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
   const btn = e.target.closest("button");
   if (!btn) return;
@@ -161,7 +171,6 @@ document.getElementById("lista-laboratorio").addEventListener("click", (e) => {
    - Ordinamento: due button (o select). Salva in stato e render().
    I tre si compongono dentro render() in fila.
 */
-
 document.getElementById("input-ricerca").oninput = render;
 document.getElementById("filtro-stato").onchange = render;
 document.getElementById("ordine-selezionato").onchange = render;
@@ -170,7 +179,6 @@ document.getElementById("ordine-selezionato").onchange = render;
    Funzione notifica(testo) che imposta il testo del <div id="notifica">,
    lo mostra (display: block), poi dopo 3000ms (setTimeout) lo nasconde.
 */
-
 function mostraNotifica(testo) {
   const notifica = document.getElementById("notifica");
   notifica.textContent = testo;
@@ -182,10 +190,10 @@ function mostraNotifica(testo) {
    Un button che chiama document.body.classList.toggle("dark").
    In CSS scrivi le regole opposte (es. body.dark { background: #111; ... }).
 */
-
 document.getElementById("btn-tema").onclick = () => {
   isDarkMode = !isDarkMode;
   document.body.classList.toggle("dark-mode", isDarkMode);
+  document.getElementById("btn-tema").textContent = isDarkMode ? "Tema chiaro" : "Tema scuro";
 };
 
 /* PERSISTENZA — localStorage (cerca tu su MDN)
@@ -195,34 +203,40 @@ document.getElementById("btn-tema").onclick = () => {
        const salvato = localStorage.getItem("dati");
        if (salvato) stato = JSON.parse(salvato);
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 
 /* RIORDINO ↑ ↓
    Due button su ogni elemento. Click su ↑ scambia con il precedente nell'array,
    ↓ con il successivo. Event delegation. Poi render().
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 
 /* ESPORTAZIONE / IMPORTAZIONE JSON (cerca tu su MDN)
    - Esporta: crea un Blob con JSON.stringify(stato), genera un URL con
      URL.createObjectURL e simula il click su un <a download>.
    - Importa: <input type="file"> + FileReader per leggere il contenuto come
-     text, JSON.parse, sostituisci lo stato, render().
+     testo, JSON.parse, sostituisci lo stato, render().
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 
 /* STATISTICHE GRAFICHE
    Almeno due indicatori: contatori grandi e/o barre orizzontali
    (<div> con width: X% in base al dato). Aggiorna dentro render().
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 
 /* MULTI-VISTA — lista / card / tabella
    Una variabile globale "vista" che render() legge per decidere quale HTML
    produrre. Tre button cambiano "vista" e chiamano render().
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 
 /* CATEGORIE
    Aggiungi un campo categoria nello schema. Nel form un <select> per sceglierla.
    In render(), raggruppa con reduce in { categoria: [elementi] } e disegna un
    header per categoria con sotto la lista di quella categoria.
 */
+/* SCRIVI QUI LA TUA RISPOSTA */
 
 function avviaModifica(item, li) {
   const span = li.querySelector(".testo-alimento");
@@ -245,5 +259,5 @@ function avviaModifica(item, li) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    render();
+  render();
 });

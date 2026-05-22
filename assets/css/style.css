@@ -296,6 +296,15 @@ h2 {
   border-left: 5px solid #cc8383;
 }
 
+.categoria-header {
+  color: #888;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #f2efe7;
+  padding-bottom: 5px;
+}
+
 .testo-alimento {
   font-weight: 600;
   display: block;
@@ -418,6 +427,11 @@ body.dark-mode .input-modifica {
 body.dark-mode .dettaglio-alimento,
 body.dark-mode .stat-blocco {
   color: #bbb;
+}
+
+body.dark-mode .categoria-header {
+  color: #aaa;
+  border-bottom-color: #444;
 }
 
 body.dark-mode .btn-modifica,
