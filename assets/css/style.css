@@ -1,0 +1,289 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+  color: #333;
+  background: #f9f7f2;
+}
+
+header {
+  background: #4a7c59;
+  color: #ffffff;
+  padding: 35px 0;
+  margin-bottom: 30px;
+  border-bottom: 3px solid #3d684a;
+}
+
+.header-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+header h1 {
+  font-size: 2.1rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+header p {
+  color: #d1e0d5;
+  font-size: 1rem;
+}
+
+#btn-tema {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  background: transparent;
+  border: 1px solid #d1e0d5;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+h2 {
+  margin-bottom: 18px;
+  color: #333;
+}
+
+.sezione-form, 
+.sezione-controlli, 
+.meta-item {
+  background: #ffffff;
+  border: 1px solid #e5dfd3;
+  border-radius: 10px;
+}
+
+.sezione-form {
+  padding: 22px;
+  margin-bottom: 30px;
+}
+
+.campi-input::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.campo-form {
+  float: left;
+  width: 23.875%;
+  margin-right: 1.5%;
+}
+
+.campo-form:last-child {
+  margin-right: 0;
+}
+
+.campo-form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.campo-form input, 
+.campo-form select {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #cbd5c5;
+  border-radius: 6px;
+  background: #f9f7f2;
+}
+
+.btn-aggiungi-centrato {
+  display: block;
+  margin: 35px auto 0;
+  background: #4a7c59;
+  color: #ffffff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-aggiungi-centrato:hover {
+  background: #3d684a;
+}
+
+.sezione-controlli {
+  padding: 18px;
+  margin-bottom: 25px;
+}
+
+.sezione-controlli::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.controllo-item {
+  float: left;
+}
+
+.cerca-lungo {
+  width: 52%;
+  margin-right: 2%;
+}
+
+.filtro-medio {
+  width: 22%;
+  margin-right: 2%;
+}
+
+.ordine-medio {
+  width: 22%;
+}
+
+.controllo-item label {
+  display: none;
+}
+
+.controllo-item input, 
+.controllo-item select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cbd5c5;
+  border-radius: 6px;
+  background: #f9f7f2;
+}
+
+.box-statistiche {
+  background: #ffffff;
+  border: 1px solid #e5dfd3;
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 25px;
+}
+
+.box-statistiche::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.numeri-stat {
+  float: left;
+  width: 35%;
+}
+
+.stat-blocco {
+  float: left;
+  width: 33.33%;
+  font-size: 0.88rem;
+  color: #666;
+}
+
+.stat-blocco strong {
+  display: block;
+  font-size: 1.8rem;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.text-verde strong {
+  color: #4a7c59;
+}
+
+.text-azzurro strong {
+  color: #9ac5e8;
+}
+
+.text-rosso strong {
+  color: #cc8383;
+}
+
+.barra-grigia {
+  float: right;
+  width: 60%;
+  margin-top: 16px;
+  background: #e5dfd3;
+  height: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#barra-riempimento {
+  height: 100%;
+  background-color: #4a7c59 !important;
+}
+
+.barra-grigia + p {
+  float: right;
+  width: 60%;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.meta-item {
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.meta-item.validato {
+  border-left: 5px solid #9ac5e8;
+}
+
+.meta-item.da-validare {
+  border-left: 5px solid #cc8383;
+}
+
+.testo-meta {
+  font-weight: 600;
+  display: block;
+}
+
+.gruppo-pulsanti {
+  float: right;
+  margin-top: -30px;
+}
+
+.btn-stato-visitato {
+  background: #9ac5e8;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.btn-stato-da-validare {
+  background: #cc8383;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.btn-modifica, 
+.btn-elimina {
+  background: #fff;
+  border: 1px solid #cbd5c5;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 60px;
+  padding: 24px 0;
+  color: #666;
+  font-size: 0.9rem;
+  border-top: 1px solid #e5dfd3;
+}

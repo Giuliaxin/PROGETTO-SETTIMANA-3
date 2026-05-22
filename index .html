@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VegalchemyLab</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-content" style="text-align: center;">
+      <h1>VegalchemyLab</h1>
+      <p>Registra le combinazioni vegetali validate o da provare</p>
+      <button id="btn-tema">Tema scuro</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <section class="sezione-form">
+      <form id="form-viaggio">
+        <div class="campi-input">
+            <div class="campo-form">
+            <label>Combinazione</label>
+            <input id="input-meta" type="text" placeholder="Es. Riso + Lenticchie..." />
+            </div>
+            <div class="campo-form">
+            <label>Categoria</label>
+            <select id="input-continente">
+              <option value="Ferro">Ferro</option>
+              <option value="Calcio">Calcio</option>
+              <option value="Proteine">Proteine</option>
+            </select>
+            </div>
+            <div class="campo-form">
+            <label>Score (0-100)</label>
+            <input id="input-anno" type="number" placeholder="85" />
+            </div>
+            <div class="campo-form">
+            <label>Stato</label>
+            <select id="select-stato">
+                <option value="false">Da validare</option>
+                <option value="true">Validato</option>
+            </select>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn-aggiungi-centrato">Aggiungi in lab</button>
+      </form>
+    </section>
+
+    <h2>Laboratorio</h2>
+
+    <section class="sezione-controlli">
+      <div class="controllo-item cerca-lungo">
+        <label>Cerca</label>
+        <input id="input-ricerca" type="text" placeholder="Cerca per combinazione o categoria..." />
+      </div>
+
+      <div class="controllo-item filtro-medio">
+        <label>Filtri</label>
+        <select id="filtro-stato">
+          <option value="tutti">Tutti</option>
+          <option value="validato">Validati</option>
+          <option value="da-validare">Da validare</option>
+        </select>
+      </div>
+
+      <div class="controllo-item ordine-medio">
+        <label>Ordine</label>
+        <select id="ordine-selezionato">
+          <option value="score-crescente">Score crescente</option>
+          <option value="score-decrescente">Score decrescente</option>
+          <option value="alpha-az">Alfabetico (A-Z)</option>
+          <option value="alpha-za">Alfabetico (Z-A)</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="sezione-statistiche">
+      <div class="box-statistiche">
+        <h3>Statistiche</h3>
+        
+        <div class="numeri-stat">
+          <div class="stat-blocco text-verde"><strong id="stat-totale">20</strong>Totale</div>
+          <div class="stat-blocco text-azzurro"><strong id="stat-visitati">10</strong>Validati</div>
+          <div class="stat-blocco text-rosso"><strong id="stat-da-visitare">10</strong>Da validare</div>
+        </div>
+
+        <div class="barra-grigia">
+          <div id="barra-riempimento" style="width: 50%; background-color: #9ac5e8;"></div>
+        </div>
+        <p>Stato Validazione</p>
+      </div>
+    </section>
+
+    <section class="sezione-lista">
+      <ul id="lista-mete">
+        <li class="meta-item validato"><span class="testo-meta">Riso + Lenticchie</span><span class="dettaglio-meta">Proteine — Score: 95</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Cavolo nero + Tahina</span><span class="dettaglio-meta">Calcio — Score: 75</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Quinoa + Fagioli Neri</span><span class="dettaglio-meta">Proteine — Score: 90</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Mandorle + Yogurt</span><span class="dettaglio-meta">Calcio — Score: 60</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Tofu + Broccoli</span><span class="dettaglio-meta">Ferro — Score: 88</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Hummus + Pane Int.</span><span class="dettaglio-meta">Proteine — Score: 80</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Semi di Chia + Latte Avena</span><span class="dettaglio-meta">Calcio — Score: 92</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Noci + Mela</span><span class="dettaglio-meta">Ferro — Score: 70</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Avocado + Pane Segale</span><span class="dettaglio-meta">Proteine — Score: 96</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Ceci + Spinaci</span><span class="dettaglio-meta">Ferro — Score: 85</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Piselli + Riso</span><span class="dettaglio-meta">Proteine — Score: 89</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Tempeh + Asparagi</span><span class="dettaglio-meta">Proteine — Score: 82</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Avena + Frutti di Bosco</span><span class="dettaglio-meta">Ferro — Score: 94</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Burro Arachidi + Banana</span><span class="dettaglio-meta">Proteine — Score: 78</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Edamame + Riso</span><span class="dettaglio-meta">Proteine — Score: 91</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Patate + Hummus</span><span class="dettaglio-meta">Calcio — Score: 74</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Zucca + Semi Girasole</span><span class="dettaglio-meta">Ferro — Score: 86</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Fagioli Azuki + Riso</span><span class="dettaglio-meta">Proteine — Score: 87</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item validato"><span class="testo-meta">Seitan + Broccoli</span><span class="dettaglio-meta">Proteine — Score: 90</span><div class="gruppo-pulsanti"><button class="btn-stato-visitato">Validato</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+        <li class="meta-item da-validare"><span class="testo-meta">Lenticchie + Carote</span><span class="dettaglio-meta">Ferro — Score: 83</span><div class="gruppo-pulsanti"><button class="btn-stato-da-validare">Da validare</button><button class="btn-modifica">Modifica</button><button class="btn-elimina">Elimina</button></div></li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 VegalchemyLab</p>
+  </footer>
+</body>
+</html>
