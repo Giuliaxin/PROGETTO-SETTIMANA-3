@@ -73,7 +73,7 @@ h2 {
 .sezione-form,
 .sezione-controlli,
 .box-statistiche,
-.meta-item {
+.lab-item {
   background: #ffffff;
   border: 1px solid #e5dfd3;
   border-radius: 10px;
@@ -211,9 +211,6 @@ h2 {
 }
 
 .box-statistiche {
-  background: #ffffff;
-  border: 1px solid #e5dfd3;
-  border-radius: 10px;
   padding: 24px 28px;
   margin-bottom: 25px;
 }
@@ -279,34 +276,40 @@ h2 {
   color: #666;
 }
 
-.meta-item {
+.lab-item {
   padding: 15px 20px;
   margin-bottom: 10px;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.meta-item:hover {
+.lab-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
 }
 
-.meta-item.validato {
+.lab-item.validato {
   border-left: 5px solid #9ac5e8;
 }
 
-.meta-item.da-validare {
+.lab-item.da-validare {
   border-left: 5px solid #cc8383;
 }
 
-.testo-meta {
+.testo-alimento {
   font-weight: 600;
   display: block;
 }
 
+.dettaglio-alimento {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 2px;
+}
+
 .gruppo-pulsanti {
   float: right;
-  margin-top: -30px;
 }
 
 .gruppo-pulsanti button {
@@ -370,4 +373,61 @@ footer {
   color: #666;
   font-size: 0.9rem;
   border-top: 1px solid #e5dfd3;
+}
+
+.input-modifica {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #4a7c59;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  margin-bottom: 5px;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+}
+
+body.dark-mode header {
+  background-color: #2d5a3d;
+  border-bottom-color: #1e3d28;
+}
+
+body.dark-mode .sezione-form,
+body.dark-mode .sezione-controlli,
+body.dark-mode .box-statistiche,
+body.dark-mode .lab-item {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: #f1f1f1;
+}
+
+body.dark-mode .campo-form input,
+body.dark-mode .campo-form select,
+body.dark-mode .controllo-item input,
+body.dark-mode .controllo-item select,
+body.dark-mode .input-modifica {
+  background-color: #4a4a4a;
+  border-color: #666;
+  color: #fff;
+}
+
+body.dark-mode .dettaglio-alimento,
+body.dark-mode .stat-blocco {
+  color: #bbb;
+}
+
+body.dark-mode .btn-modifica,
+body.dark-mode .btn-elimina {
+  background-color: #555;
+  color: #fff;
+  border-color: #777;
+}
+
+body.dark-mode .btn-modifica:hover {
+  background-color: #666;
 }
