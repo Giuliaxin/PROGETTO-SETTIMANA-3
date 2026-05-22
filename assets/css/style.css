@@ -46,6 +46,17 @@ header p {
   color: #ffffff;
   padding: 8px 16px;
   border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+#btn-tema:hover {
+  background: #ffffff;
+  color: #4a7c59;
+}
+
+#btn-tema:active {
+  transform: scale(0.95);
 }
 
 .container {
@@ -59,8 +70,9 @@ h2 {
   color: #333;
 }
 
-.sezione-form, 
-.sezione-controlli, 
+.sezione-form,
+.sezione-controlli,
+.box-statistiche,
 .meta-item {
   background: #ffffff;
   border: 1px solid #e5dfd3;
@@ -95,13 +107,28 @@ h2 {
   margin-bottom: 6px;
 }
 
-.campo-form input, 
+.campo-form input,
 .campo-form select {
   width: 100%;
   padding: 9px;
   border: 1px solid #cbd5c5;
   border-radius: 6px;
   background: #f9f7f2;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.campo-form input:hover,
+.campo-form select:hover {
+  border-color: #4a7c59;
+  background-color: #f2efe7;
+}
+
+.campo-form input:focus,
+.campo-form select:focus {
+  border-color: #4a7c59;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.2);
 }
 
 .btn-aggiungi-centrato {
@@ -114,10 +141,16 @@ h2 {
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .btn-aggiungi-centrato:hover {
   background: #3d684a;
+  box-shadow: 0 2px 8px rgba(74, 124, 89, 0.3);
+}
+
+.btn-aggiungi-centrato:active {
+  transform: scale(0.97);
 }
 
 .sezione-controlli {
@@ -153,13 +186,28 @@ h2 {
   display: none;
 }
 
-.controllo-item input, 
+.controllo-item input,
 .controllo-item select {
   width: 100%;
   padding: 8px 12px;
   border: 1px solid #cbd5c5;
   border-radius: 6px;
   background: #f9f7f2;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.controllo-item input:hover,
+.controllo-item select:hover {
+  border-color: #4a7c59;
+  background-color: #f2efe7;
+}
+
+.controllo-item input:focus,
+.controllo-item select:focus {
+  border-color: #4a7c59;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.2);
 }
 
 .box-statistiche {
@@ -220,6 +268,7 @@ h2 {
 #barra-riempimento {
   height: 100%;
   background-color: #4a7c59 !important;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .barra-grigia + p {
@@ -234,6 +283,12 @@ h2 {
   padding: 15px 20px;
   margin-bottom: 10px;
   overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.meta-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
 }
 
 .meta-item.validato {
@@ -254,12 +309,25 @@ h2 {
   margin-top: -30px;
 }
 
+.gruppo-pulsanti button {
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.gruppo-pulsanti button:active {
+  transform: scale(0.95);
+}
+
 .btn-stato-visitato {
   background: #9ac5e8;
   color: #fff;
   border: none;
   padding: 6px 14px;
   border-radius: 20px;
+}
+
+.btn-stato-visitato:hover {
+  background: #81b3d4;
 }
 
 .btn-stato-da-validare {
@@ -270,13 +338,29 @@ h2 {
   border-radius: 20px;
 }
 
-.btn-modifica, 
+.btn-stato-da-validare:hover {
+  background: #b57272;
+}
+
+.btn-modifica,
 .btn-elimina {
   background: #fff;
   border: 1px solid #cbd5c5;
   padding: 4px 10px;
   border-radius: 4px;
   margin-left: 6px;
+  color: #333;
+}
+
+.btn-modifica:hover {
+  background: #f2efe7;
+  border-color: #999;
+}
+
+.btn-elimina:hover {
+  background: #fff0f0;
+  color: #c93b3b;
+  border-color: #ea9999;
 }
 
 footer {
